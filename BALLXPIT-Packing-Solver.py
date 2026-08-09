@@ -27,76 +27,85 @@ def get_orientations(shape):
 
 
 # ---------------------------------------------------------------------------
-# The original 18 pieces (unchanged shapes / letters A-R).
+# Zone 1 pieces (letters A-R, plus the newly added Y and Z).
 # ---------------------------------------------------------------------------
-pieces_def = [
-    ([(0, 1), (1, 1), (1, 2)], "A", "L-tromino 1"),
-    ([(0, 1), (1, 1), (1, 2)], "B", "L-tromino 2"),
-    ([(0, 1), (1, 1), (1, 2)], "C", "L-tromino 3"),
-    ([(0, 1), (1, 1), (1, 2)], "D", "L-tromino 4"),
-    ([(r, c) for r in range(3) for c in range(3)], "E", "3x3 Square"),
-    ([(r, c) for r in range(2) for c in range(2)], "F", "2x2 Square"),
-    ([(r, c) for r in range(3) for c in range(2)], "G", "2x3 Rectangle"),
-    ([(0, 1), (1, 1), (2, 0), (2, 1), (2, 2), (3, 1)], "H", "Cross-like"),
-    ([(0, 0), (0, 1), (0, 2), (1, 1), (2, 1), (3, 0), (3, 1), (3, 2)], "I", "8-cell U/I"),
-    ([(0, 0), (0, 1), (1, 0), (1, 1), (2, 1)], "J", "P-pentomino 1"),
-    ([(0, 0), (0, 1), (1, 0), (1, 1), (2, 1)], "K", "P-pentomino 2"),
-    ([(0, 0), (0, 2), (1, 0), (1, 1), (1, 2)], "L", "U-pentomino"),
-    ([(0, 1), (1, 0), (1, 1), (1, 2), (2, 1)], "M", "Plus sign 1"),
-    ([(0, 1), (1, 0), (1, 1), (1, 2), (2, 1)], "N", "Plus sign 2"),
-    ([(0, 2), (1, 0), (1, 1), (1, 2), (2, 1)], "O", "T/Corner"),
-    ([(0, 0), (0, 1), (0, 2)], "P", "1x3 Bar"),
-    ([(0, 1), (1, 0), (1, 1), (1, 2)], "Q", "T-tetromino"),
-    ([(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 1), (1, 2), (1, 3), (2, 2)], "R", "Arrow/House"),
+zone_1_buildings_def = [
+    ([(0, 1), (1, 1), (1, 2)], "A", "Haunted House - L-tromino 1"),
+    ([(0, 1), (1, 1), (1, 2)], "B", "Sheriff's Office - L-tromino 2"),
+    ([(0, 1), (1, 1), (1, 2)], "C", "Campground - L-tromino 3"),
+    ([(0, 1), (1, 1), (1, 2)], "D", "Single Family Home - L-tromino 4"),
+    ([(r, c) for r in range(3) for c in range(3)], "E", "Ball House - 3x3 Square"),
+    ([(r, c) for r in range(2) for c in range(2)], "F", "Rocky Hill - 2x2 Square"),
+    ([(r, c) for r in range(3) for c in range(2)], "G", "Mausoleum - 2x3 Rectangle"),
+    ([(0, 1), (1, 1), (2, 0), (2, 1), (2, 2), (3, 1)], "H", "Monastery - Cross-like"),
+    ([(0, 0), (0, 1), (0, 2), (1, 1), (2, 1), (3, 0), (3, 1), (3, 2)], "I", "Stone Domain - 8-cell I"),
+    ([(0, 0), (0, 1), (1, 0), (1, 1), (2, 1)], "J", "Captian's Quarters - P-pentomino 1"),
+    ([(0, 0), (0, 1), (1, 0), (1, 1), (2, 1)], "K", "Party House - P-pentomino 2"),
+    ([(0, 0), (0, 2), (1, 0), (1, 1), (1, 2)], "L", "Villa - U-pentomino"),
+    ([(0, 1), (1, 0), (1, 1), (1, 2), (2, 1)], "M", "Iron Fortress - Plus sign 1"),
+    ([(0, 1), (1, 0), (1, 1), (1, 2), (2, 1)], "N", "Unstable Tower - Plus sign 2"),
+    ([(0, 2), (1, 0), (1, 1), (1, 2), (2, 1)], "O", "Laboratory - T/Corner"),
+    ([(0, 0), (0, 1), (0, 2)], "P", "Theater - 1x3 Bar"),
+    ([(0, 1), (1, 0), (1, 1), (1, 2)], "Q", "Cozy Home - T-tetromino"),
+    ([(0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (1, 1), (1, 2), (1, 3), (2, 2)], "R", "Mansion - Arrow/House"),
+    ([(0, 0), (0, 1), (1, 0), (1, 1), (2, 1), (3, 1)], "Y", "Falconry Hut - Longer P-pentomino 3"),
+    ([(0, 0), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)], "Z", "Hidden Temple - U-pentomino"),
 ]
 
 # ---------------------------------------------------------------------------
-# NEW: the six "buildings" that pack around M in its own dedicated zone.
-# Drawn exactly as given, row 0 = top row of the ASCII art.
+# Zone 2 pieces: the six "buildings" that pack around M in its own
+# dedicated zone. Drawn exactly as given, row 0 = top row of the ASCII art.
 # ---------------------------------------------------------------------------
-buildings_def = [
+zone_2_buildings_def = [
     ([(0, 0), (0, 1), (0, 2),
        (1, 0), (1, 1), (1, 2),
        (2, 0), (2, 1), (2, 2),
-       (3, 1)], "S", "Building 1"),
+       (3, 1)], "S", "Capitolium"),
     ([(0, 0), (0, 1), (0, 2), (0, 3),
        (1, 0), (1, 1), (1, 2), (1, 3),
-       (2, 1), (2, 2)], "T", "Building 2"),
+       (2, 1), (2, 2)], "T", "Warrior's Guild"),
     ([(0, 0), (0, 1), (0, 2), (0, 3),
        (1, 0), (1, 1), (1, 2), (1, 3),
        (2, 0),
-       (3, 0)], "U", "Building 3"),
+       (3, 0)], "U", "Hospital"),
     ([(0, 0), (0, 1), (0, 2), (0, 3),
        (1, 0), (1, 1), (1, 2), (1, 3),
-       (2, 0), (2, 1)], "V", "Building 4"),
+       (2, 0), (2, 1)], "V", "Wagon Factory"),
     ([(0, 0), (0, 1), (0, 2),
        (1, 0), (1, 1), (1, 2),
-       (2, 1), (2, 2), (2, 3)], "W", "Building 5"),
+       (2, 1), (2, 2), (2, 3)], "W", "Marksman's Guild"),
     ([(0, 1), (0, 2),
        (1, 0), (1, 1),
        (2, 0), (2, 1),
        (3, 0), (3, 1),
-       (4, 1), (4, 2)], "X", "Building 6"),
+       (4, 1), (4, 2)], "X", "Grand Museum"),
 ]
 
-assert sum(len(s) for s, _, _ in buildings_def) == 59, "building cell count changed"
+assert sum(len(s) for s, _, _ in zone_2_buildings_def) == 59, "building cell count changed"
+
+# Sanity check: all Zone 1 piece labels must be unique, and none of them may
+# collide with the reserved "@" character used for the center marker block
+# (previously this was "Z", which broke the moment a real "Z" piece -
+# Hidden Temple - was added below).
+_zone1_labels = [lbl for _, lbl, _ in zone_1_buildings_def]
+assert len(_zone1_labels) == len(set(_zone1_labels)), "duplicate Zone 1 piece label"
+assert "@" not in _zone1_labels, "'@' is reserved for the center marker block"
 
 # ---------------------------------------------------------------------------
 # Board layout.
 #
 # Board is 23x23 -- sized for comfortable room, not because the zones need
-# it (they'd fit on 17x17 too). Zone 1 (Z's zone) and Zone 2 (M's zone) are
-# allowed to physically overlap -- Zone 2 is shifted diagonally from Zone 1
-# so the two share a 3x3 overlap block, and both are centered symmetrically
-# on the larger board so every piece has generous room to sprawl outside
-# its own zone (as allowed) without the two zones' "extend-outward" pieces
-# immediately colliding with each other along the edges. M is a normal
-# Zone-1 piece (still eligible for the P-pentomino adjacency bonus, still
-# part of Zone 1's dense-pack objective, which runs -- and locks in --
-# before anything Zone-2-specific happens, giving Zone 1 priority), but its
-# candidate placements are additionally required to touch Zone 2 as well,
-# so every legal M placement necessarily sits in or reaches into the shared
-# overlap block. The six buildings only need to touch Zone 2.
+# it (they'd fit on 17x17 too). Zone 1 (7x7 dense-pack zone) and Zone 2
+# (M's zone) are allowed to physically overlap -- Zone 2 is shifted
+# diagonally from Zone 1 so the two share a 3x3 overlap block, and both are
+# centered symmetrically on the larger board so every piece has generous
+# room to sprawl outside its own zone (as allowed) without the two zones'
+# "extend-outward" pieces immediately colliding with each other along the
+# edges. M is pinned to the exact center cell of Zone 2's 7x7 box (see
+# ZONE2_CENTER / PIECE_REQUIRED_CELLS below), so it has exactly one legal
+# placement and sits dead-center among the six Zone-2 buildings. It's still
+# eligible for the plus-sign/P-pentomino adjacency bonus. The six buildings
+# only need to touch Zone 2.
 # ---------------------------------------------------------------------------
 BOARD_SIZE = 23
 
@@ -109,17 +118,33 @@ M_C_START, M_C_END = 10, 16  # Zone 2 (cols) -- shared block: rows/cols 10-12
 ZONE1_BOUNDS = (R_START, R_END, C_START, C_END)
 ZONE2_BOUNDS = (M_R_START, M_R_END, M_C_START, M_C_END)
 
-# Which zone(s) each piece's candidates must touch. Every original piece
-# targets Zone 1 as before; M additionally must touch Zone 2; buildings
-# only need to touch Zone 2.
-PIECE_REQUIRED_ZONES = {lbl: [ZONE1_BOUNDS] for _, lbl, _ in pieces_def}
-PIECE_REQUIRED_ZONES["M"] = [ZONE1_BOUNDS, ZONE2_BOUNDS]
-for _, lbl, _ in buildings_def:
+# The single center cell of Zone 2's 7x7 box (10..16 -> middle index 13).
+ZONE2_CENTER = ((M_R_START + M_R_END) // 2, (M_C_START + M_C_END) // 2)
+
+# Which zone(s) each piece's candidates must touch. Every Zone-1 piece
+# (including the new Y and Z) targets Zone 1 as before; buildings only need
+# to touch Zone 2.
+#
+# M is pinned dead-center in Zone 2 (see PIECE_REQUIRED_CELLS below): its
+# plus-sign shape is exactly 3x3, so once its middle cell sits on
+# ZONE2_CENTER the whole piece is automatically inside Zone 2 -- but that
+# also puts it entirely outside Zone 1's box (rows/cols 6-12), since the
+# two zones only overlap in rows/cols 10-12 and the Zone-2 center (13,13)
+# is past that overlap. So M is no longer required to touch Zone 1; it's a
+# Zone-2 piece now, still eligible for the plus-sign/P-pentomino adjacency
+# bonus since that only cares about which cells end up next to each other.
+PIECE_REQUIRED_ZONES = {lbl: [ZONE1_BOUNDS] for _, lbl, _ in zone_1_buildings_def}
+PIECE_REQUIRED_ZONES["M"] = [ZONE2_BOUNDS]
+for _, lbl, _ in zone_2_buildings_def:
     PIECE_REQUIRED_ZONES[lbl] = [ZONE2_BOUNDS]
 
+# Cells a piece's placement is hard-required to cover, beyond the zone
+# checks above. M must cover the exact center of Zone 2.
+PIECE_REQUIRED_CELLS = {"M": ZONE2_CENTER}
+
 # Adjacency preference groups (soft "if possible" preferences) -- unchanged.
-# M is back in the normal Zone-1 pool, so "Plus sign next to a P-pentomino"
-# is fully reachable again via either M or N.
+# Y and Z are not part of any preference group yet; add them here if you
+# want them to participate in a bonus (e.g. P_PENTOMINO_LABELS.append("Y")).
 PLUS_SIGN_LABELS = ["M", "N"]
 P_PENTOMINO_LABELS = ["J", "K"]
 BAR_LABEL = "P"
@@ -143,8 +168,8 @@ log("Building model...")
 
 model = cp_model.CpModel()
 x_vars = {}
-placements_by_label = {label: [] for _, label, _ in pieces_def}
-placements_by_label.update({label: [] for _, label, _ in buildings_def})
+placements_by_label = {label: [] for _, label, _ in zone_1_buildings_def}
+placements_by_label.update({label: [] for _, label, _ in zone_2_buildings_def})
 # label_cell_vars[label][(r, c)] = list of placement-vars of that piece
 # that would cover cell (r, c). Used for cheap adjacency/exposure bookkeeping.
 label_cell_vars = {label: {} for label in placements_by_label}
@@ -164,7 +189,7 @@ def touches_all_zones(cells, zones):
 orientation_cache = {}
 
 
-def add_piece_candidates(p_idx, raw_shape, label, name, required_zones):
+def add_piece_candidates(p_idx, raw_shape, label, name, required_zones, required_cell=None):
     shape_key = tuple(raw_shape)
     if shape_key not in orientation_cache:
         orientation_cache[shape_key] = get_orientations(raw_shape)
@@ -177,6 +202,8 @@ def add_piece_candidates(p_idx, raw_shape, label, name, required_zones):
         for r in range(BOARD_SIZE - max_r):
             for c in range(BOARD_SIZE - max_c):
                 placed_cells = [(r + dr, c + dc) for dr, dc in shape]
+                if required_cell is not None and required_cell not in placed_cells:
+                    continue
                 if touches_all_zones(placed_cells, required_zones):
                     v = model.NewBoolVar(f"x_{p_idx}_{o_idx}_{r}_{c}")
                     x_vars[(p_idx, o_idx, r, c)] = (v, placed_cells)
@@ -188,17 +215,19 @@ def add_piece_candidates(p_idx, raw_shape, label, name, required_zones):
 
 
 p_idx = 0
-for raw_shape, label, name in pieces_def:
+for raw_shape, label, name in zone_1_buildings_def:
     zones = PIECE_REQUIRED_ZONES[label]
-    n_orient, n_cand = add_piece_candidates(p_idx, raw_shape, label, name, zones)
-    tag = " [must touch Zone 1 AND Zone 2]" if label == "M" else ""
+    req_cell = PIECE_REQUIRED_CELLS.get(label)
+    n_orient, n_cand = add_piece_candidates(p_idx, raw_shape, label, name, zones, req_cell)
+    tag = f" [pinned to Zone 2 center {ZONE2_CENTER}]" if label == "M" else ""
     log(f"  Piece {label:>2} ({name:<14}): {n_orient} orientation(s), "
         f"{n_cand} candidate placements{tag}")
     p_idx += 1
 
-for raw_shape, label, name in buildings_def:
+for raw_shape, label, name in zone_2_buildings_def:
     zones = PIECE_REQUIRED_ZONES[label]
-    n_orient, n_cand = add_piece_candidates(p_idx, raw_shape, label, name, zones)
+    req_cell = PIECE_REQUIRED_CELLS.get(label)
+    n_orient, n_cand = add_piece_candidates(p_idx, raw_shape, label, name, zones, req_cell)
     log(f"  Piece {label:>2} ({name:<14}): {n_orient} orientation(s), "
         f"{n_cand} candidate placements")
     p_idx += 1
@@ -215,7 +244,10 @@ center_var_h = model.NewBoolVar("center_h")
 center_var_v = model.NewBoolVar("center_v")
 model.AddExactlyOne([center_var_h, center_var_v])
 
-# The 1x3 "Z" marker still lives in the middle of Zone 1.
+# The center 1x3 marker block still lives in the middle of Zone 1.
+# NOTE: it is displayed/legend-labeled as "@" (not "Z") because "Z" is now
+# a real piece label (Hidden Temple, added above) -- reusing "Z" for both
+# would make them indistinguishable on the printed grid.
 center_cells_h = [(9, 8), (9, 9), (9, 10)]
 center_cells_v = [(8, 9), (9, 9), (10, 9)]
 
@@ -354,7 +386,7 @@ bonus_total = model.NewIntVar(0, len(PREFERENCE_BONUSES), "bonus_total")
 model.Add(bonus_total == sum(PREFERENCE_BONUSES.values()))
 
 # ---------------------------------------------------------------------------
-# NEW: M's exposure score (soft, maximized) and pathway-to-boundary
+# M's exposure score (soft, maximized) and pathway-to-boundary
 # (hard constraint, always enforced).
 #
 # Exposure: for every edge between a cell M occupies and an orthogonally
@@ -485,17 +517,17 @@ class ProgressPrinter(cp_model.CpSolverSolutionCallback):
             f"{val} (best bound: {self.BestObjectiveBound():.0f})")
 
 
-ALL_LABELS = [lbl for _, lbl, _ in pieces_def] + [lbl for _, lbl, _ in buildings_def]
+ALL_LABELS = [lbl for _, lbl, _ in zone_1_buildings_def] + [lbl for _, lbl, _ in zone_2_buildings_def]
 
 
 def render_grid(solver, title=""):
     grid = [["." for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)]
     if solver.Value(center_var_h):
         for r, c in center_cells_h:
-            grid[r][c] = "Z"
+            grid[r][c] = "@"
     else:
         for r, c in center_cells_v:
-            grid[r][c] = "Z"
+            grid[r][c] = "@"
 
     for (p, o, r, c), (v, cells) in x_vars.items():
         if solver.Value(v):
@@ -504,13 +536,16 @@ def render_grid(solver, title=""):
                 grid[pr][pc] = lbl
 
     colors = {
-        "Z": "\033[93m", "A": "\033[91m", "B": "\033[92m", "C": "\033[94m",
+        "@": "\033[93m",  # center 1x3 marker block (Zone 1)
+        "A": "\033[91m", "B": "\033[92m", "C": "\033[94m",
         "D": "\033[95m", "E": "\033[96m", "F": "\033[97m", "G": "\033[31m",
         "H": "\033[32m", "I": "\033[33m", "J": "\033[34m", "K": "\033[35m",
         "L": "\033[36m", "M": "\033[90m", "N": "\033[91m", "O": "\033[92m",
         "P": "\033[94m", "Q": "\033[95m", "R": "\033[96m",
         "S": "\033[31m", "T": "\033[32m", "U": "\033[33m", "V": "\033[34m",
-        "W": "\033[35m", "X": "\033[36m", ".": "\033[0m",
+        "W": "\033[35m", "X": "\033[36m",
+        "Y": "\033[1;33m", "Z": "\033[1;36m",  # newly added pieces
+        ".": "\033[0m",
     }
     reset = "\033[0m"
 
@@ -519,7 +554,7 @@ def render_grid(solver, title=""):
     print()
     if title:
         print(f"=== {title} ===")
-    print(f"Zone 1 (Z) density: {covered1} / 49 cells filled")
+    print(f"Zone 1 (@) density: {covered1} / 49 cells filled")
     print(f"Zone 2 (M) density: {covered2} / 49 cells filled")
     print(f"M exposure score: {solver.Value(exposure_score)} / {len(exposure_edges)} open perimeter edges")
     satisfied = [name for name, b in PREFERENCE_BONUSES.items() if solver.Value(b)]
@@ -544,12 +579,12 @@ def render_grid(solver, title=""):
         print(row_str)
 
     print("\nPiece Legend:")
-    print(f"{colors['Z']}[ Z ]{reset} = Center 1x3 Block (Zone 1)")
-    for raw_shape, lbl, name in pieces_def:
+    print(f"{colors['@']}[ @ ]{reset} = Center 1x3 Block (Zone 1)")
+    for raw_shape, lbl, name in zone_1_buildings_def:
         col = colors.get(lbl, reset)
         tag = " (Zone 2 home)" if lbl == "M" else ""
         print(f"{col}[ {lbl} ]{reset} = {name}{tag}")
-    for raw_shape, lbl, name in buildings_def:
+    for raw_shape, lbl, name in zone_2_buildings_def:
         col = colors.get(lbl, reset)
         print(f"{col}[ {lbl} ]{reset} = {name} (Zone 2)")
 
